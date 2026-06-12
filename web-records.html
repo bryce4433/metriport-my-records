@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mochi — Health Records (web mockup)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Real Mochi tokens (packages/design-tokens / mochi-default) */
+      :root {
+        --navy: #000045;
+        --navy-2: #3b3b8d;
+        --bg: #f3f6f9;
+        --card: #ffffff;
+        --text: #000045;
+        --text-subtle: #606069;
+        --text-subtler: #7e7f87;
+        --border-subtle: #00004520;
+        --border-subtler: #3b3b8d26;
+        --brand-subtle: #ebebf4;
+        --accent-info-50: #ecf3f8;
+        --accent-info-200: #d5e2fb;
+        --accent-info-500: #448fff;
+        --err-50: #fef3f2;
+        --err-300: #fda29b;
+        --err-500: #ea4135;
+        --err-700: #c5291d;
+        --warn-50: #fffaeb;
+        --warn-300: #fec84b;
+        --warn-700: #d06507;
+        --ok-50: #ecfdf3;
+        --ok-300: #75e0a7;
+        --ok-700: #0b8850;
+        --radius: 14px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family:
+          "Poppins",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        color: var(--text);
+        background: #fff;
+        display: flex;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* sidebar */
+      .sidebar {
+        width: 232px;
+        flex-shrink: 0;
+        background: #fff;
+        border-right: 1px solid #eceef2;
+        display: flex;
+        flex-direction: column;
+        padding: 28px 16px 20px;
+      }
+      .logo {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        padding: 0 12px;
+      }
+      .logo small {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 4px;
+        font-weight: 600;
+        margin-top: -4px;
+      }
+      .nav {
+        margin-top: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+      .nav a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        color: var(--text-subtle);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .nav a.active {
+        background: #eef0f4;
+        color: var(--navy);
+        font-weight: 600;
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #eceef2;
+      }
+      .user .av {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #e3e6ec;
+        color: var(--navy-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .user .meta {
+        font-size: 12px;
+        line-height: 1.3;
+        min-width: 0;
+      }
+      .user .meta b {
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .user .meta span {
+        color: var(--text-subtler);
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .signout {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        margin-top: 8px;
+        color: var(--text-subtle);
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      /* main */
+      .main {
+        flex: 1;
+        background: var(--bg);
+        padding: 36px 48px 60px;
+        overflow: auto;
+      }
+      .main h1 {
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--navy);
+        letter-spacing: -0.6px;
+      }
+      .lede {
+        font-size: 15px;
+        color: var(--text-subtle);
+        margin-top: 6px;
+      }
+      .wrap {
+        max-width: 1100px;
+      }
+
+      /* intro: plain-English what & why */
+      .intro {
+        margin-top: 22px;
+        background: var(--accent-info-50);
+        border: 1px solid var(--border-subtler);
+        border-radius: var(--radius);
+        padding: 22px 24px;
+        display: flex;
+        gap: 16px;
+      }
+      .intro .ic {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy-2);
+        flex-shrink: 0;
+      }
+      .intro-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .intro h2 {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--navy);
+        letter-spacing: -0.2px;
+      }
+      .intro p {
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: var(--text-subtle);
+        margin-top: 7px;
+        max-width: 780px;
+      }
+      .intro-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-subtler);
+        flex-wrap: wrap;
+      }
+      .intro-meta .src {
+        font-size: 13px;
+        color: var(--text-subtler);
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .btn {
+        border: none;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 9px 16px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .btn-outline {
+        background: #fff;
+        color: var(--navy);
+        border: 1px solid var(--border-subtle);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 22px 24px;
+        box-shadow: 0 1px 2px rgba(0, 0, 30, 0.04);
+      }
+
+      /* AI summary */
+      .summary {
+        margin-top: 16px;
+      }
+      .summary .lbl {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: var(--navy-2);
+      }
+      .summary p {
+        font-size: 17px;
+        line-height: 1.6;
+        margin-top: 12px;
+        max-width: 880px;
+      }
+      .summary p .hl {
+        font-weight: 600;
+      }
+      .disclaimer {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--text-subtler);
+        font-style: italic;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 34px 0 14px;
+      }
+      .section-head h2 {
+        font-size: 19px;
+        font-weight: 700;
+      }
+      .section-head span {
+        font-size: 14px;
+        color: var(--text-subtler);
+      }
+
+      /* grid of section cards */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .grid .full {
+        grid-column: 1 / -1;
+      }
+
+      .sec-head {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+      .ico {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--navy);
+      }
+      .sec-head .grow {
+        flex: 1;
+        min-width: 0;
+      }
+      .sec-head .title {
+        font-size: 16.5px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .count {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--navy-2);
+        background: var(--brand-subtle);
+        border-radius: 999px;
+        padding: 2px 9px;
+      }
+      .sec-head .desc {
+        font-size: 13px;
+        color: var(--text-subtler);
+        margin-top: 2px;
+      }
+      .viewall-link {
+        background: none;
+        border: none;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--navy);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .viewall-link svg {
+        color: var(--text-subtler);
+      }
+
+      .plist {
+        margin-top: 16px;
+      }
+      .pitem {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 0;
+        border-top: 1px solid #f1f2f6;
+      }
+      .pitem .nm {
+        font-size: 14.5px;
+        font-weight: 500;
+        flex: 1;
+        min-width: 0;
+      }
+      .pitem .nm small {
+        display: block;
+        font-weight: 400;
+        font-size: 12.5px;
+        color: var(--text-subtler);
+        margin-top: 1px;
+      }
+      .pitem .meta {
+        font-size: 12.5px;
+        color: var(--text-subtler);
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      .chip {
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 3px 9px;
+        white-space: nowrap;
+      }
+      .chip-warn {
+        background: var(--warn-50);
+        color: var(--warn-700);
+      }
+      .chip-info {
+        background: var(--accent-info-50);
+        color: var(--navy-2);
+      }
+      .chip-err {
+        background: var(--err-50);
+        color: var(--err-700);
+      }
+      .chip-ok {
+        background: var(--ok-50);
+        color: var(--ok-700);
+      }
+      .chip-flat {
+        background: var(--bg);
+        color: var(--text-subtle);
+      }
+
+      .foot-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 14px;
+      }
+      .note-inline {
+        font-size: 12.5px;
+        color: var(--text-subtler);
+        line-height: 1.45;
+      }
+
+      /* vitals grid */
+      .vgrid {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .vstat {
+        background: var(--bg);
+        border-radius: 12px;
+        padding: 14px;
+      }
+      .vstat .k {
+        font-size: 12px;
+        color: var(--text-subtler);
+        font-weight: 500;
+      }
+      .vstat .v {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        margin-top: 4px;
+      }
+      .vstat .v span {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-subtler);
+      }
+      .vstat .d {
+        font-size: 11px;
+        color: var(--text-subtler);
+        margin-top: 2px;
+      }
+
+      .screening {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .screening .s {
+        background: var(--bg);
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: var(--text-subtle);
+      }
+      .screening .s b {
+        color: var(--navy);
+        font-weight: 600;
+      }
+
+      .footer {
+        font-size: 12px;
+        color: var(--text-subtler);
+        margin-top: 30px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="logo">mochi<small>HEALTH</small></div>
+      <nav class="nav">
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          Home</a
+        >
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <circle cx="12" cy="12" r="5" />
+            <circle cx="12" cy="12" r="1.4" fill="currentColor" />
+          </svg>
+          Progress Tracker</a
+        >
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"
+            />
+          </svg>
+          Messages</a
+        >
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2z"
+            />
+          </svg>
+          Care</a
+        >
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Visits</a
+        >
+        <a class="active" href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="9" y1="13" x2="15" y2="13" />
+            <line x1="9" y1="17" x2="13" y2="17" />
+          </svg>
+          Health Records</a
+        >
+        <a href="#"
+          ><svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+          </svg>
+          Billing</a
+        >
+      </nav>
+      <div class="user">
+        <span class="av">DB</span>
+        <span class="meta"
+          ><b>David Bowie</b><span>david+demo@mochi.com</span></span
+        >
+      </div>
+      <div class="signout">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Sign Out
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="main">
+      <div class="wrap">
+        <h1>Health records</h1>
+        <!-- intro: plain-English what & why -->
+        <div class="intro">
+          <span class="ic">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            </svg>
+          </span>
+          <div class="intro-body">
+            <h2>Your full health history, in one place</h2>
+            <p>
+              Your Mochi care team pulls in your medical records from the other
+              doctors, clinics, and pharmacies you've visited, so they have the
+              full picture and can give you better care. We're giving you that
+              same view here, so you can see everything together.
+            </p>
+            <div class="intro-meta">
+              <span class="src"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                Gathered securely from your other providers &middot; Last synced
+                Mar 18, 2026</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- AI summary -->
+        <div class="card summary">
+          <div class="lbl">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"
+              />
+              <path d="M19 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+            </svg>
+            AI summary
+          </div>
+          <p>
+            Your connected records show care for a few ongoing conditions,
+            including <span class="hl">type 2 diabetes</span>,
+            <span class="hl">high blood pressure</span>, and an
+            <span class="hl">irregular heartbeat (atrial fibrillation)</span>.
+            They include 12 medications, lab work from January 2026, and a
+            heart-related emergency visit in December 2025. Your most recent
+            visit was with endocrinology in February 2026.
+          </p>
+          <div class="disclaimer">
+            A summary of records shared by your other providers. This is not
+            medical advice.
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>From your other providers</h2>
+          <span>Select any section to see the full details.</span>
+        </div>
+
+        <div class="grid">
+          <!-- Conditions -->
+          <div class="card">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 11H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h4M9 11V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6m-6 0h6m0 0h4a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-4m0-9v9m-6 0h6"
+                  /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Health conditions <span class="count">38</span>
+                </div>
+                <div class="desc">Conditions noted across your records</div>
+              </div>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">
+                  Type 2 diabetes <small>First noted 2014</small>
+                </div>
+                <span class="chip chip-flat">Ongoing</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  High blood pressure <small>First noted 2016</small>
+                </div>
+                <span class="chip chip-flat">Ongoing</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  Irregular heartbeat (atrial fibrillation)
+                  <small>First noted 2022</small>
+                </div>
+                <span class="chip chip-flat">Ongoing</span>
+              </div>
+            </div>
+            <div class="foot-row">
+              <span></span
+              ><button class="viewall-link">
+                View all 38
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Medications -->
+          <div class="card">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.5 20.5 4 14a4.95 4.95 0 0 1 7-7l6.5 6.5a4.95 4.95 0 0 1-7 7z"
+                  />
+                  <line x1="8.5" y1="8.5" x2="15.5" y2="15.5" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Medications <span class="count">12</span>
+                </div>
+                <div class="desc">On file with your other providers</div>
+              </div>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">Metformin <small>1000 mg</small></div>
+                <span class="meta">Last filled Feb 15, 2026</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">Semaglutide <small>1 mg</small></div>
+                <span class="meta">Last filled Feb 2, 2026</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">Apixaban <small>5 mg</small></div>
+                <span class="meta">Last filled Jan 28, 2026</span>
+              </div>
+            </div>
+            <div class="foot-row">
+              <span class="note-inline"
+                >Listed separately from Mochi prescriptions.</span
+              ><button class="viewall-link">
+                View all 12
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Allergies -->
+          <div class="card">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                  />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">Allergies <span class="count">3</span></div>
+                <div class="desc">Allergies and reactions on file</div>
+              </div>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">Penicillin <small>Reaction: hives</small></div>
+                <span class="chip chip-err">Allergy</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">Shellfish <small>Reaction: other</small></div>
+                <span class="chip chip-err">Allergy</span>
+              </div>
+            </div>
+            <div class="foot-row">
+              <span></span
+              ><button class="viewall-link">
+                View all 3
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Family history -->
+          <div class="card">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path
+                    d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"
+                  /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Family history <span class="count">10</span>
+                </div>
+                <div class="desc">Conditions noted in your family</div>
+              </div>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">
+                  Father <small>Heart attack, high blood pressure</small>
+                </div>
+                <span class="meta">Deceased</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">Mother <small>Type 2 diabetes</small></div>
+                <span class="meta">Living</span>
+              </div>
+            </div>
+            <div class="foot-row">
+              <span></span
+              ><button class="viewall-link">
+                View all
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Vitals (full width) -->
+          <div class="card full">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">Vitals &amp; measurements</div>
+                <div class="desc">Most recent readings from your records</div>
+              </div>
+              <button class="viewall-link">
+                See all measurements
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="vgrid">
+              <div class="vstat">
+                <div class="k">Blood pressure</div>
+                <div class="v">134/82 <span>mmHg</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+              <div class="vstat">
+                <div class="k">Heart rate</div>
+                <div class="v">88 <span>bpm</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+              <div class="vstat">
+                <div class="k">Weight</div>
+                <div class="v">217 <span>lb</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+              <div class="vstat">
+                <div class="k">Respiratory rate</div>
+                <div class="v">18 <span>/min</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+              <div class="vstat">
+                <div class="k">Oxygen (SpO2)</div>
+                <div class="v">96 <span>%</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+              <div class="vstat">
+                <div class="k">Temperature</div>
+                <div class="v">98.4 <span>&deg;F</span></div>
+                <div class="d">Jan 20, 2026</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Labs (full width) -->
+          <div class="card full">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 3h6v5l4 9a2 2 0 0 1-1.8 3H6.8A2 2 0 0 1 5 17l4-9z"
+                  />
+                  <line x1="9" y1="3" x2="15" y2="3" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Lab results <span class="count">208</span>
+                </div>
+                <div class="desc">Most recent results from your records</div>
+              </div>
+              <button class="viewall-link">
+                View all 208
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">
+                  Hemoglobin A1c
+                  <small
+                    >7.4% &middot; reference range 4.0&ndash;5.6% &middot; Jan
+                    20, 2026</small
+                  >
+                </div>
+                <span class="chip chip-warn">Above range</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  Glucose
+                  <small
+                    >142 mg/dL &middot; reference range 70&ndash;99 &middot; Jan
+                    20, 2026</small
+                  >
+                </div>
+                <span class="chip chip-warn">Above range</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  LDL cholesterol
+                  <small
+                    >78 mg/dL &middot; reference range &lt;100 &middot; Jan 12,
+                    2026</small
+                  >
+                </div>
+                <span class="chip chip-ok">In range</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  eGFR (kidney function)
+                  <small
+                    >52 mL/min &middot; reference range &gt;60 &middot; Jan 12,
+                    2026</small
+                  >
+                </div>
+                <span class="chip chip-warn">Below range</span>
+              </div>
+            </div>
+            <div class="foot-row">
+              <span class="note-inline"
+                >Ranges and flags come straight from the lab that ran each
+                test.</span
+              ><span></span>
+            </div>
+          </div>
+
+          <!-- Procedures (full width) -->
+          <div class="card full">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="6" cy="6" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                  <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                  <line x1="8.12" y1="8.12" x2="12" y2="12" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Procedures &amp; screenings <span class="count">57</span>
+                </div>
+                <div class="desc">
+                  Procedures, imaging, and preventive screenings
+                </div>
+              </div>
+              <button class="viewall-link">
+                View all 57
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="screening">
+              <span class="s">Colonoscopy <b>Sep 2021</b></span>
+              <span class="s">Lipid panel <b>Jan 2026</b></span>
+              <span class="s">DEXA scan <b>May 2024</b></span>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">
+                  Echocardiogram
+                  <small
+                    >Heart imaging &middot; Jan 20, 2026 &middot;
+                    Completed</small
+                  >
+                </div>
+                <span class="chip chip-info">View report</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  Upper endoscopy (EGD)
+                  <small
+                    >Upper GI &middot; Sep 18, 2025 &middot; Completed</small
+                  >
+                </div>
+                <span class="chip chip-info">View report</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Past visits (full width) -->
+          <div class="card full">
+            <div class="sec-head">
+              <span class="ico"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M19 5h-2V3M7 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"
+                  />
+                  <path d="M9 3v4M15 3v4M3 11h18" /></svg
+              ></span>
+              <div class="grow">
+                <div class="title">
+                  Past visits <span class="count">147</span>
+                </div>
+                <div class="desc">
+                  Visits with your other providers. Select one to read the visit
+                  note.
+                </div>
+              </div>
+              <button class="viewall-link">
+                View all 147
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="plist">
+              <div class="pitem">
+                <div class="nm">
+                  Endocrinology &middot; telehealth
+                  <small
+                    >Feb 3, 2026 &middot; Diabetes &amp; weight
+                    management</small
+                  >
+                </div>
+                <span class="chip chip-info">Read note</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  Cardiology follow-up
+                  <small>Jan 20, 2026 &middot; Atrial fibrillation</small>
+                </div>
+                <span class="chip chip-info">Read note</span>
+              </div>
+              <div class="pitem">
+                <div class="nm">
+                  Emergency visit
+                  <small>Dec 14, 2025 &middot; Palpitations</small>
+                </div>
+                <span class="chip chip-err">ER</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          Sample data shown for demonstration. Not a real patient. Records
+          gathered via Metriport from connected health networks.
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
